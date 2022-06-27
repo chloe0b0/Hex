@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 
 #define OFFSET 16   // commonly 16 or 8
 #define NIL '.'     // Empty byte
@@ -10,11 +8,11 @@ int main(int argc, char** argv){
     unsigned long addr = 0;
 
     FILE* fp = fopen(argv[1], "rb");
-    if (!fp){
+    if (fp == NULL){
         fprintf(stderr, "Could not open %s\n", argv[1]);
-        exit(1);
+        return 1;
     }
-  
+
     int read;
     char buff[OFFSET] = "";
     while ((read = fread(buff, 1, sizeof(buff), fp))){
