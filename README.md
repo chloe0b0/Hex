@@ -1,2 +1,6 @@
 # Hex
-A small Hex dump utility
+A small Hex viewer utility
+
+
+## TODO
+Add command line flags (Max number of bytes to read etc)
