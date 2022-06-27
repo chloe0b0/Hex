@@ -17,20 +17,21 @@ int main(int argc, char** argv){
   
     int read;
     char buff[OFFSET] = "";
-    while ((read = fread(buff, 1, sizeof(buff)+1, fp))){
+    while ((read = fread(buff, 1, sizeof(buff), fp))){
         // Print address
         printf("%08x: ", addr);
 
         // Hex values
         // each byte is represented with a 2 digit hex code
         for (i = 0; i < OFFSET; ++i){
-            printf("%02x",(unsigned char) buff[i]);
+            if (i >= read){ putchar(' '); }
+            else printf("%02x",(unsigned char) buff[i]);
             if (i % 2 == 1){ putchar(' '); }
         }
         
         // Print ASCII representation or NIL if not representable as ASCII
         putchar('\t');
-        for (i = 0; i < OFFSET; ++i){
+        for (i = 0; i < read; ++i){
             printf("%c", (buff[i] >= ' ' && buff[i] <= '~' ? buff[i] : NIL));
         }
 
