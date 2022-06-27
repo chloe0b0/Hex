@@ -31,6 +31,7 @@ int main(int argc, char** argv){
         
         // Print ASCII representation or NIL if not representable as ASCII
         putchar('\t');
+        if (OFFSET - read){ putchar('\t'); }
         for (i = 0; i < read; ++i){
             printf("%c", (buff[i] >= ' ' && buff[i] <= '~' ? buff[i] : NIL));
         }
