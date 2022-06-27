@@ -1,20 +1,17 @@
 #include <stdio.h>
 
 #define OFFSET 16   // commonly 16 or 8
-#define NIL '.'     // Empty byte
+#define NIL '.'     // Non-ASCII byte
 
 int main(int argc, char** argv){
-    int i;
-    unsigned long addr = 0;
-
     FILE* fp = fopen(argv[1], "rb");
     if (fp == NULL){
         fprintf(stderr, "Could not open %s\n", argv[1]);
         return 1;
     }
-
-    int read;
+    int read, i;
     char buff[OFFSET] = "";
+    unsigned long addr = 0;
     while ((read = fread(buff, 1, sizeof(buff), fp))){
         // Print address
         printf("%08x: ", addr);
