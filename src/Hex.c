@@ -6,7 +6,7 @@
 #define NIL '.'         // Non-ASCII byte
 #define OCTETS_PER 2    // Octets per group
 #define CHAR_PER_OCTET 2 
-#define ROW_SIZE 9 + (CHAR_PER_OCTET*OFFSET) + (OFFSET/OCTETS_PER) + OFFSET + 25
+#define ROW_SIZE 9 + (CHAR_PER_OCTET*OFFSET) + (OFFSET/OCTETS_PER) + OFFSET + 5000
 
 int main(int argc, char** argv){
     // 9 chars for addr + char_per_octet*octets + spaces + ASCII_characters + 1 (Null Terminate)
@@ -21,8 +21,7 @@ int main(int argc, char** argv){
     int read, i;
     char buff[OFFSET] = "";
     unsigned long addr = 0;
-    clock_t t;
-    t = clock();
+    clock_t t = clock();
     size_t ix = 0;
     while ((read = fread(buff, 1, sizeof(buff), fp))){
         char row[ROW_SIZE] = "";
@@ -45,12 +44,13 @@ int main(int argc, char** argv){
         }
         
         row[ix++] = '\t';
+        if (OFFSET - read) row[ix++] = '\t'; 
         // Print ASCII representation or NIL if not representable as ASCII
         for (i = 0; i < read; ++i){
             row[ix++] = (buff[i] >= ' ' && buff[i] <= '~' ? buff[i] : NIL);
         }
         
-        printf(row);
+        fputs(row, stdout);
         addr += OFFSET;
         putchar('\n');
         ix = 0;
